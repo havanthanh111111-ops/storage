@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề thi thử Tốt nghiệp THPT 2026 - Môn Vật lí</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax for rendering math equations -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f4f6;
+        }
+        .correct-bg {
+            background-color: #d1fae5;
+            border-color: #10b981;
+        }
+        .incorrect-bg {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+    <div class="max-w-4xl mx-auto my-8 px-4 sm:px-6">
+        <!-- Header -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 mb-8 border border-gray-100">
+            <div class="flex flex-col md:flex-row justify-between items-center border-b border-dashed border-gray-200 pb-4 mb-4 text-center md:text-left gap-4">
+                <div>
+                    <h2 class="text-sm font-bold tracking-widest text-blue-600 uppercase">Bộ Giáo dục và Đào tạo</h2>
+                    <h3 class="text-lg font-extrabold text-red-600 mt-1">ĐỀ THI CHÍNH THỨC</h3>
+                    <p class="text-xs text-gray-500 mt-1">(Đề thi có 04 trang)</p>
+                </div>
+                <div class="text-center md:text-right">
+                    <h1 class="text-lg sm:text-xl font-black text-gray-950 uppercase tracking-tight">Kỳ thi Tốt nghiệp THPT năm 2026</h1>
+                    <p class="text-sm font-bold text-gray-700 mt-1">Môn thi: VẬT LÍ</p>
+                    <p class="text-xs text-gray-500 mt-1">Thời gian làm bài: 50 phút, không kể thời gian phát đề</p>
+                </div>
+            </div>
+
+            <!-- Student Info Fields -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm mt-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 uppercase">Họ và tên thí sinh:</label>
+                    <input type="text" placeholder="Nguyễn Văn A" class="w-full mt-1 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 uppercase">Số báo danh:</label>
+                    <input type="text" placeholder="123456" class="w-full mt-1 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 uppercase">Mã đề thi:</label>
+                    <div class="w-full mt-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg font-mono font-bold text-gray-700 text-center">
+                        0216
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons & Scoring Widget -->
+        <div class="sticky top-4 z-50 bg-white/95 backdrop-blur-md rounded-xl shadow-md p-4 mb-8 flex flex-wrap gap-3 justify-between items-center border border-blue-50">
+            <div class="flex items-center gap-2">
+                <span class="inline-block w-3 h-3 rounded-full bg-blue-500 animate-pulse"></span>
+                <span class="text-xs font-semibold text-gray-600 uppercase">Hệ thống thi trắc nghiệm</span>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="submitExam()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-4 py-2 rounded-lg shadow-sm transition">
+                    Nộp bài & Xem kết quả
+                </button>
+                <button onclick="resetExam()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-sm px-4 py-2 rounded-lg transition">
+                    Làm lại
+                </button>
+            </div>
+        </div>
+
+        <!-- SCORE REPORT CONTAINER -->
+        <div id="scoreReport" class="hidden bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl p-6 mb-8 shadow-sm">
+            <h3 class="text-xl font-bold text-blue-900 mb-2">Kết quả bài làm của bạn</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
+                <div class="bg-white p-3 rounded-xl border border-blue-100 text-center">
+                    <span class="block text-xs text-gray-500 font-medium">Tổng điểm</span>
+                    <span id="scoreVal" class="text-2xl font-black text-blue-600">0.0 / 10</span>
+                </div>
+                <div class="bg-white p-3 rounded-xl border border-blue-100 text-center">
+                    <span class="block text-xs text-gray-500 font-medium">Phần I (Đơn lựa chọn)</span>
+                    <span id="part1Correct" class="text-lg font-bold text-gray-700">0/18</span>
+                </div>
+                <div class="bg-white p-3 rounded-xl border border-blue-100 text-center">
+                    <span class="block text-xs text-gray-500 font-medium">Phần II (Đúng/Sai)</span>
+                    <span id="part2Correct" class="text-lg font-bold text-gray-700">0/16 ý</span>
+                </div>
+                <div class="bg-white p-3 rounded-xl border border-blue-100 text-center">
+                    <span class="block text-xs text-gray-500 font-medium">Phần III (Trả lời ngắn)</span>
+                    <span id="part3Correct" class="text-lg font-bold text-gray-700">0/6</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PHẦN I ================= -->
+        <div class="space-y-6">
+            <div class="bg-blue-900 text-white px-5 py-3 rounded-xl shadow-sm">
+                <h2 class="font-bold text-base">PHẦN I: Trắc nghiệm khách quan nhiều lựa chọn</h2>
+                <p class="text-xs text-blue-200 mt-1">Thí sinh trả lời từ câu 1 đến câu 18. Mỗi câu hỏi thí sinh chỉ chọn một phương án.</p>
+            </div>
+
+            <!-- Câu 1 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="1" data-correct="D">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 1.</span> Khi đun một ấm nước, lúc nước đang sôi, dù tiếp tục được cung cấp nhiệt lượng thì nhiệt độ vẫn ở $100\ ^\circ\text{C}$ cho đến khi cạn nước. Phát biểu nào sau đây là đúng?</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q1" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> Nhiệt lượng cung cấp cho nước đang sôi làm tăng tốc độ trung bình của các phân tử nước.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q1" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> Do nhiệt độ của nước không thay đổi nên nội năng của khối nước trong ấm không đổi.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q1" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> Việc đun với công suất nhiệt cao hơn sẽ làm nhiệt độ sôi của nước cao hơn $100\ ^\circ\text{C}$.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q1" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> Nhiệt lượng cung cấp cho nước đang sôi dùng để phá vỡ liên kết giữa các phân tử nước.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Khi nước đang sôi, nhiệt lượng cung cấp cho khối nước không làm tăng động năng chuyển động nhiệt trung bình (không làm tăng nhiệt độ) mà dùng để thắng lực liên kết giữa các phân tử nước, thực hiện quá trình chuyển thể từ lỏng sang hơi.
+                </div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="2" data-correct="A">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 2.</span> Một khối chất lỏng có đặc điểm nào sau đây?</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q2" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> Có thể tích xác định nhưng không có hình dạng xác định.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q2" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> Có hình dạng xác định nhưng không có thể tích xác định.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q2" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> Có thể tích và hình dạng xác định.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q2" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> Không có thể tích và hình dạng xác định.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Các phân tử ở thể lỏng ở gần nhau và lực liên kết giữa chúng đủ mạnh để giữ chúng không tách rời xa nhau, do đó chất lỏng có thể tích xác định. Tuy nhiên chúng dễ dàng trượt lên nhau nên không có hình dạng xác định mà có hình dạng của phần bình chứa nó.
+                </div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="3" data-correct="A">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 3.</span> Nén một khối khí lí tưởng trong xilanh kín. Nội năng của khối khí</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q3" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> tăng, nếu xilanh cách nhiệt.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q3" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> tăng do khối khí nhận công.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q3" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> không đổi, nếu xilanh cách nhiệt.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q3" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> giảm do khối khí nhận công.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Theo nguyên lí I Nhiệt động lực học: $\Delta U = Q + A$. Khi nén khí, khối khí nhận công ($A > 0$), do xylanh đoạn nhiệt tức là không trao đổi nhiệt bên ngoài. Do vậy quá trình này làm các hạt va chạm mạnh hơn dẫn đến nội năng của khối khí tăng lên, nhiệt độ trong xy lanh cũng tăng.
+                </div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="4" data-correct="A">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 4.</span> Khi ở gần nhau,</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q4" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> hai cực từ khác loại của hai nam châm hút nhau.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q4" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> hai dòng điện cùng chiều đẩy nhau.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q4" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> hai dòng điện ngược chiều hút nhau.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q4" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> hai điện tích trái dấu đẩy nhau.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Hai cực từ khác tên (khác loại) thì hút nhau; hai dòng điện cùng chiều thì hút nhau, ngược chiều thì đẩy nhau; hai điện tích trái dấu thì hút nhau. Do đó, phương án A đúng.
+                </div>
+            </div>
+
+            <!-- Câu 5 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="5" data-correct="D">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 5.</span> Các phân tử khí lí tưởng gây ra áp suất lên thành bình chứa là do chúng</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q5" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> hút nhau khi chuyển động lại gần nhau.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q5" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> va chạm với nhau.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q5" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> đẩy nhau khi chuyển động lại gần nhau.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q5" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> va chạm vào thành bình.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Khi chuyển động hỗn loạn không ngừng, vô số các phân tử khí va chạm vào thành bình tác dụng lực vuông góc lên diện tích thành bình tạo ra áp suất khí.
+                </div>
+            </div>
+
+            <!-- Câu 6 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="6" data-correct="C">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 6.</span> Một nguồn phóng xạ dùng trong y tế được bảo quản trong bình chì. Khi cần sử dụng, người ta mở cửa bình cho tia phóng xạ phát ra ngoài để chiếu xạ. Thời gian mỗi lần chiếu xạ được coi là bằng thời gian mỗi lần mở cửa bình. Tổng thời gian mà nguồn phóng xạ này còn có thể phát tia phóng xạ đủ để sử dụng</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q6" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> chỉ phụ thuộc vào số lần mở cửa bình.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q6" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> phụ thuộc vào số lần mở cửa bình cũng như độ mạnh hay yếu của chùm tia phóng xạ trong mỗi lần chiếu.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q6" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> không phụ thuộc vào số lần mở cửa bình cũng như độ mạnh hay yếu của chùm tia phóng xạ trong mỗi lần chiếu.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q6" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> chỉ phụ thuộc vào độ mạnh hay yếu của chùm tia phóng xạ trong mỗi lần chiếu.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Sự phân rã hạt nhân là quá trình tự phát, diễn ra hoàn toàn độc lập với các tác động hay yếu tố bên ngoài (bao gồm cả việc mở hay đóng bình). Chất phóng xạ vẫn liên tục phân rã bên trong bình chì. Do đó tổng thời gian khả dụng của nguồn phóng xạ chỉ tuân theo quy luật bán rã tự nhiên mà không phụ thuộc vào việc đóng/mở nắp hay cường độ chùm tia khi chiếu.
+                </div>
+            </div>
+
+            <!-- Câu 7 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="7" data-correct="D">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 7.</span> Khi nói về dòng điện xoay chiều, phát biểu nào sau đây là đúng?</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q7" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> Giá trị hiệu dụng của dòng điện bằng một nửa giá trị cực đại.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q7" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> Công suất toả nhiệt ở điện trở R tỉ lệ thuận với cường độ hiệu dụng của dòng điện qua điện trở.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q7" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> Giá trị hiệu dụng của điện áp bằng một nửa giá trị cực đại.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q7" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> Cường độ dòng điện biến thiên theo thời gian theo định luật dạng sin (hoặc cosin).</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> 
+                    <ul class="list-disc ml-5 space-y-1">
+                        <li>A, C sai vì giá trị hiệu dụng bằng cực đại chia cho $\sqrt{2}$.</li>
+                        <li>B sai vì công suất tỏa nhiệt $P = I^2 R$ tỉ lệ thuận với bình phương cường độ dòng điện hiệu dụng.</li>
+                        <li>D đúng: Dòng điện xoay chiều là dòng điện có cường độ biến thiên điều hoà theo thời gian (dạng sin hoặc cosin).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Câu 8 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="8" data-correct="D">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 8.</span> Trong một từ trường đều, một proton chuyển động tròn đều chỉ do tác dụng của lực từ. Phát biểu nào sau đây là đúng?</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q8" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> Gia tốc của hạt không đổi.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q8" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> Động năng của hạt tăng.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q8" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> Vận tốc của hạt không đổi.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q8" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> Lực từ không sinh công.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Lực từ (lực Lorentz) luôn vuông góc với vận tốc của hạt chuyển động ($\vec{F} \perp \vec{v}$). Do đó công của lực từ $A = F \cdot s \cdot \cos(90^\circ) = 0$. Vì công bằng không, động năng và độ lớn vận tốc (tốc độ) của proton không thay đổi. Lưu ý: Gia tốc và vận tốc luôn thay đổi về hướng nên không thể coi là không đổi.
+                </div>
+            </div>
+
+            <!-- Câu 9 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="9" data-correct="B">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 9.</span> Nếu một proton đứng yên, nó sẽ</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q9" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> không tạo ra điện trường.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q9" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> không tạo ra từ trường.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q9" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> tạo ra từ trường khi nó nằm gần một dây dẫn.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q9" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> tạo ra từ trường giống như một nam châm nhỏ.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Một điện tích đứng yên chỉ xung quanh nó có điện trường tĩnh và không sinh ra từ trường. Từ trường chỉ sinh ra bởi các hạt tích điện chuyển động (hoặc dòng điện). Do đó proton đứng yên không tạo ra từ trường.
+                </div>
+            </div>
+
+            <!-- Câu 10 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="10" data-correct="C">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 10.</span> Trong chẩn đoán bệnh, khi đưa một đồng vị phóng xạ vào cơ thể người bệnh, để đảm bảo an toàn, người ta dùng đồng vị có</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q10" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> năng lượng liên kết riêng nhỏ để dễ dàng phân rã trong mạch máu.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q10" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> chu kì bán rã dài để kéo dài thời gian tác dụng của chất phóng xạ trong cơ thể.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q10" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> chu kì bán rã ngắn để giảm thời gian tồn tại của chất phóng xạ trong cơ thể.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q10" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> khả năng phát ra tia alpha mạnh để dễ dàng xuyên qua cơ thể đến máy thu.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Sử dụng các đồng vị có chu kỳ bán rã ngắn giúp chất phóng xạ phân rã nhanh chóng và nhanh bị đào thải ra ngoài, giảm thiểu tối đa liều lượng bức xạ có hại tích tụ lâu trong cơ thể người bệnh. Đồng thời không dùng tia alpha vì có khả năng ion hóa mạnh và tầm đâm xuyên rất yếu không ra ngoài được máy thu nhận.
+                </div>
+            </div>
+
+            <!-- Câu 11 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="11" data-correct="A">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 11.</span> Khi một khối khí lí tưởng xác định dãn nở đẳng nhiệt thì</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q11" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> áp suất của khối khí giảm.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q11" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> nội năng của khối khí giảm.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q11" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> nội năng của khối khí tăng.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q11" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> áp suất của khối khí không đổi.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Theo định luật Boyle, đối với một lượng khí lí tưởng xác định ở nhiệt độ không đổi (đẳng nhiệt), áp suất tỉ lệ nghịch với thể tích ($p \propto 1/V$). Khi dãn nở ($V$ tăng) thì áp suất $p$ giảm. Do nhiệt độ không đổi nên nội năng của khí lí tưởng cũng không đổi.
+                </div>
+            </div>
+
+            <!-- Câu 12 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="12" data-correct="A">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 12.</span> Khi đặt vật 1 tiếp xúc nhiệt với vật 2 và có sự truyền nhiệt từ vật 1 sang vật 2, phát biểu nào sau đây là đúng?</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q12" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> Vật 1 và vật 2 đều không chứa nhiệt lượng.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q12" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> Vật 1 chứa rất nhiều nhiệt lượng.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q12" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> Vật 1 chứa nhiều nhiệt lượng hơn vật 2.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q12" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> Vật 2 chứa rất ít nhiệt lượng.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Nhiệt lượng là phần nội năng tăng thêm hay giảm đi trong quá trình truyền nhiệt, vật không "chứa" nhiệt lượng mà chỉ có "nội năng". Do đó, phát biểu A đúng.
+                </div>
+            </div>
+
+            <!-- Câu 13 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="13" data-correct="C">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 13.</span> Khi truyền cùng một nhiệt lượng cho hai vật có cùng khối lượng được làm từ hai chất khác nhau, trong điều kiện không xảy ra sự chuyển thể, phát biểu nào sau đây là đúng?</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q13" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> Hai vật có độ biến thiên nhiệt độ bằng nhau.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q13" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> Hai vật không thay đổi nhiệt độ.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q13" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> Vật được làm từ chất có nhiệt dung riêng lớn hơn có độ biến thiên nhiệt độ nhỏ hơn.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q13" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> Vật được làm từ chất có nhiệt dung riêng lớn hơn có độ biến thiên nhiệt độ lớn hơn.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Công thức nhiệt lượng thu vào: $Q = mc\Delta T \Rightarrow \Delta T = \frac{Q}{mc}$. Khi $Q$ và $m$ như nhau, độ biến thiên nhiệt độ $\Delta T$ tỉ lệ nghịch với nhiệt dung riêng $c$. Vật có $c$ lớn hơn thì $\Delta T$ nhỏ hơn.
+                </div>
+            </div>
+
+            <!-- Câu 14 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="14" data-correct="C">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 14.</span> Hai hạt nhân X và Y có năng lượng liên kết bằng nhau. Nếu số nucleon của hạt nhân X nhỏ hơn số nucleon của hạt nhân Y thì</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q14" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> độ hụt khối của hạt nhân X lớn hơn độ hụt khối của hạt nhân Y.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q14" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> độ hụt khối của hạt nhân Y lớn hơn độ hụt khối của hạt nhân X.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q14" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> hạt nhân X bền vững hơn hạt nhân Y.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q14" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> hạt nhân Y bền vững hơn hạt nhân X.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Mức độ bền vững của hạt nhân được quyết định bởi năng lượng liên kết riêng $E_{lkr} = \frac{E_{lk}}{A}$. Theo bài ra, $E_{lkX} = E_{lkY}$ và $A_X < A_Y \Rightarrow \frac{E_{lkX}}{A_X} > \frac{E_{lkY}}{A_Y}$. Do đó hạt nhân X có năng lượng liên kết riêng lớn hơn nên bền vững hơn hạt nhân Y.
+                </div>
+            </div>
+
+            <!-- Câu 15 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="15" data-correct="C">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 15.</span> Với một khối khí lí tưởng xác định, định luật Charles mô tả mối liên hệ giữa</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q15" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> thể tích và khối lượng của khối khí khi nhiệt độ tuyệt đối không đổi.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q15" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> áp suất và thể tích của khối khí khi nhiệt độ tuyệt đối không đổi.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q15" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> thể tích và nhiệt độ tuyệt đối của khối khí khi áp suất không đổi.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q15" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> áp suất và nhiệt độ tuyệt đối của khối khí khi thể tích không đổi.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Định luật Charles mô tả quá trình đẳng áp của một khối khí lí tưởng xác định, biểu diễn mối liên hệ tỉ lệ thuận giữa thể tích $V$ và nhiệt độ tuyệt đối $T$ ($\frac{V}{T} = \text{const}$).
+                </div>
+            </div>
+
+            <!-- Câu 16 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="16" data-correct="B">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 16.</span> Theo định luật Lenz, dòng điện cảm ứng sinh ra trong một mạch điện kín có chiều sao cho từ trường mà nó sinh ra có tác dụng</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q16" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> làm giảm từ thông qua mạch.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q16" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> chống lại sự biến thiên của từ thông qua mạch.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q16" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> làm từ thông qua mạch bằng không.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q16" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> làm tăng từ thông qua mạch.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Định luật Lenz phát biểu: Dòng điện cảm ứng xuất hiện trong mạch kín có chiều sao cho từ trường cảm ứng có tác dụng chống lại sự biến thiên từ thông ban đầu qua mạch kín đó.
+                </div>
+            </div>
+
+            <!-- Câu 17 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="17" data-correct="D">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 17.</span> Một khối khí lí tưởng xác định biến đổi theo quá trình thể tích không đổi từ trạng thái X sang trạng thái Y, phát biểu nào sau đây là đúng?</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q17" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> Khoảng cách trung bình giữa các phân tử tăng lên.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q17" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> Mật độ phân tử của khối khí tăng lên.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q17" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> Nhiệt độ của khối khí không đổi.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q17" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> Công mà khối khí sinh ra bằng không.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Khi thể tích không đổi (đẳng tích):
+                    <ul class="list-disc ml-5 space-y-1">
+                        <li>Thể tích $V = \text{const} \Rightarrow$ Khoảng cách trung bình giữa các phân tử và mật độ phân tử không đổi.</li>
+                        <li>Công $A = p \cdot \Delta V = 0$. Khí không sinh công cũng như không nhận công. Do đó phương án D đúng.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Câu 18 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part1" data-qnum="18" data-correct="D">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 18.</span> Quá trình chuyển thể từ thể rắn sang thể lỏng được gọi là</p>
+                <div class="space-y-2 text-sm">
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q18" value="A" class="mt-0.5 text-blue-600">
+                        <span><strong>A.</strong> sự đông đặc.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q18" value="B" class="mt-0.5 text-blue-600">
+                        <span><strong>B.</strong> sự sôi.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q18" value="C" class="mt-0.5 text-blue-600">
+                        <span><strong>C.</strong> sự hóa hơi.</span>
+                    </label>
+                    <label class="flex items-start gap-3 p-2.5 rounded-lg border border-gray-100 hover:bg-gray-50 cursor-pointer transition">
+                        <input type="radio" name="p1_q18" value="D" class="mt-0.5 text-blue-600">
+                        <span><strong>D.</strong> sự nóng chảy.</span>
+                    </label>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong> Quá trình một chất chuyển từ thể rắn sang thể lỏng gọi là sự nóng chảy. Ngược lại là sự đông đặc.
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PHẦN II ================= -->
+        <div class="space-y-6 mt-12">
+            <div class="bg-blue-900 text-white px-5 py-3 rounded-xl shadow-sm">
+                <h2 class="font-bold text-base">PHẦN II: Câu hỏi trắc nghiệm đúng/sai</h2>
+                <p class="text-xs text-blue-200 mt-1">Thí sinh trả lời từ câu 1 đến câu 4. Trong mỗi ý a), b), c), d) ở mỗi câu, thí sinh chọn đúng hoặc sai.</p>
+            </div>
+
+            <!-- Câu 1 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part2" data-qnum="1">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 1.</span> Ở một mặt phẳng nằm ngang cố định trong một từ trường đều có các đường sức từ nằm ngang, đặt một đoạn dây dẫn thẳng có dòng điện không đổi sao cho chiều của dòng điện hợp với chiều của đường sức một góc $\alpha$. Khi thay đổi góc $\alpha$, đoạn dây vẫn nằm trong mặt phẳng cố định nói trên.</p>
+                
+                <div class="space-y-4 text-sm mt-4">
+                    <!-- Ý a -->
+                    <div class="border-b border-gray-50 pb-3 block-sub-q" data-sub="a" data-ans="Đúng">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>a)</strong> Lực từ tác dụng lên đoạn dây có phương vuông góc với cả đoạn dây và đường sức từ.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ý b -->
+                    <div class="border-b border-gray-50 pb-3 block-sub-q" data-sub="b" data-ans="Sai">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>b)</strong> Khi thay đổi góc $\alpha$ thì phương của lực từ tác dụng lên đoạn dây cũng thay đổi.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ý c -->
+                    <div class="border-b border-gray-50 pb-3 block-sub-q" data-sub="c" data-ans="Đúng">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>c)</strong> Khi đặt đoạn dây song song với các đường sức từ, không có lực từ tác dụng lên đoạn dây.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ý d -->
+                    <div class="block-sub-q" data-sub="d" data-ans="Đúng">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>d)</strong> Lực từ tác dụng lên đoạn dây có độ lớn cực đại khi đoạn dây vuông góc với đường sức từ.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong>
+                    <ul class="list-disc ml-5 space-y-1">
+                        <li><strong>a) Đúng:</strong> Theo quy tắc bàn tay trái, lực từ $\vec{F}$ vuông góc với mặt phẳng chứa đoạn dây (dòng điện $\vec{I}$) và vectơ cảm ứng từ $\vec{B}$. Do đó $\vec{F}$ vuông góc với cả đoạn dây và đường sức từ.</li>
+                        <li><strong>b) Sai:</strong> Vì dòng điện và các đường sức đều nằm trong cùng mặt phẳng nằm ngang cố định, phương của lực từ luôn vuông góc với mặt phẳng này (tức là luôn có phương thẳng đứng), nên khi thay đổi góc $\alpha$ thì phương của lực từ không thay đổi (chỉ có độ lớn thay đổi).</li>
+                        <li><strong>c) Đúng:</strong> Khi song song thì góc $\alpha = 0^\circ$ hoặc $180^\circ$, lực từ $F = B \cdot I \cdot L \cdot \sin\alpha = 0$.</li>
+                        <li><strong>d) Đúng:</strong> Lực từ đạt cực đại khi $\sin\alpha = 1 \Rightarrow \alpha = 90^\circ$ (dây vuông góc đường sức từ).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part2" data-qnum="2">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 2.</span> Nhiệt dung riêng của nước được xác định bằng công thức $c = \frac{Q}{m \cdot \Delta T}$. Trong đó, $Q$ là nhiệt lượng cung cấp, $m$ là khối lượng nước, $\Delta T$ là độ thay đổi nhiệt độ.</p>
+                
+                <!-- Image Container simulated with SVG design representation -->
+                <div class="my-4 flex justify-center bg-gray-50 p-4 rounded-xl border border-gray-100">
+                    <svg viewBox="0 0 400 300" class="w-full max-w-sm h-auto bg-white rounded-lg shadow-sm">
+                        <!-- Giá đỡ -->
+                        <line x1="280" y1="280" x2="280" y2="40" stroke="#334155" stroke-width="8"/>
+                        <line x1="280" y1="80" x2="190" y2="80" stroke="#475569" stroke-width="6"/>
+                        <rect x="230" y="275" width="100" height="10" rx="3" fill="#1e293b" />
+                        <line x1="20" y1="285" x2="380" y2="285" stroke="#000" stroke-width="4" />
+                        
+                        <!-- Kiềng & Đèn cồn / Bếp -->
+                        <path d="M 100,285 L 120,240 L 220,240 L 240,285" fill="none" stroke="#475569" stroke-width="4" />
+                        
+                        <!-- Bình nhiệt lượng kế -->
+                        <rect x="130" y="140" width="80" height="100" rx="4" fill="none" stroke="#0284c7" stroke-width="3" />
+                        <!-- Nước trong bình -->
+                        <rect x="132" y="170" width="76" height="68" fill="#e0f2fe" opacity="0.8"/>
+                        <line x1="140" y1="185" x2="150" y2="185" stroke="#38bdf8" />
+                        <line x1="180" y1="195" x2="190" y2="195" stroke="#38bdf8" />
+                        <line x1="155" y1="210" x2="165" y2="210" stroke="#38bdf8" />
+                        
+                        <!-- Dây điện trở nhiệt -->
+                        <path d="M 155,140 L 155,210 Q 160,225 170,225 Q 180,225 180,210 L 180,140" fill="none" stroke="#dc2626" stroke-width="2.5" />
+                        <circle cx="155" cy="140" r="3" fill="#dc2626" />
+                        <circle cx="180" cy="140" r="3" fill="#dc2626" />
+                        <text x="110" y="115" font-family="sans-serif" font-size="11" fill="#334155" font-weight="bold">Nhiệt kế</text>
+                        <text x="100" y="180" font-family="sans-serif" font-size="11" fill="#0284c7" font-weight="bold">Nước</text>
+                        <text x="70" y="240" font-family="sans-serif" font-size="11" fill="#dc2626" font-weight="bold">Dây điện trở</text>
+                        
+                        <!-- Nối mũi tên -->
+                        <path d="M 148,112 L 175,112 L 175,130" fill="none" stroke="#475569" stroke-dasharray="2" />
+                        <!-- Nhiệt kế vẽ đứng -->
+                        <rect x="188" y="60" width="10" height="160" rx="5" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+                        <!-- Thủy ngân đỏ -->
+                        <rect x="192" y="140" width="2" height="75" fill="#ef4444" />
+                        <circle cx="193" cy="215" r="5" fill="#ef4444" />
+                        <!-- Vạch chia -->
+                        <line x1="188" y1="80" x2="193" y2="80" stroke="#000" stroke-width="1"/>
+                        <line x1="188" y1="100" x2="193" y2="100" stroke="#000" stroke-width="1"/>
+                        <line x1="188" y1="120" x2="193" y2="120" stroke="#000" stroke-width="1"/>
+                        <line x1="188" y1="140" x2="193" y2="140" stroke="#000" stroke-width="1"/>
+                        <line x1="188" y1="160" x2="193" y2="160" stroke="#000" stroke-width="1"/>
+                    </svg>
+                </div>
+
+                <p class="text-sm text-gray-600 mb-4">Để kiểm chứng lý thuyết "Nhiệt dung riêng của nước không phụ thuộc vào khối lượng nước", học sinh tiến hành thí nghiệm với điện áp $U$ và cường độ dòng điện $I$ không đổi cung cấp qua dây điện trở trong thời gian $t$. Kết quả thực nghiệm cho thấy nhiệt dung riêng nước không phụ thuộc vào $m$.</p>
+
+                <div class="space-y-4 text-sm">
+                    <!-- Ý a -->
+                    <div class="border-b border-gray-50 pb-3 block-sub-q" data-sub="a" data-ans="Đúng">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>a)</strong> Khoảng thời gian cấp điện $t$ càng lớn thì nhiệt lượng do dây điện trở tỏa ra càng lớn.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ý b -->
+                    <div class="border-b border-gray-50 pb-3 block-sub-q" data-sub="b" data-ans="Sai">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>b)</strong> Tất cả nhiệt lượng do dây điện trở tỏa ra đều được dùng để làm tăng nhiệt độ của nước.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ý c -->
+                    <div class="border-b border-gray-50 pb-3 block-sub-q" data-sub="c" data-ans="Sai">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>c)</strong> Nhiệt độ $T_2$ càng lớn thì nhiệt lượng bị mất mát càng nhỏ.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ý d -->
+                    <div class="block-sub-q" data-sub="d" data-ans="Sai">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>d)</strong> Kết quả thí nghiệm bác bỏ giả thuyết của nhóm học sinh.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong>
+                    <ul class="list-disc ml-5 space-y-1">
+                        <li><strong>a) Đúng:</strong> Công suất tỏa nhiệt là $P = U \cdot I \Rightarrow$ Nhiệt lượng tỏa ra $Q = U \cdot I \cdot t$. Do đó $t$ càng lớn thì $Q$ càng lớn.</li>
+                        <li><strong>b) Sai:</strong> Thực tế một phần nhiệt lượng nhỏ sẽ tỏa ra ngoài môi trường xung quanh, làm nóng cốc và nhiệt kế.</li>
+                        <li><strong>c) Sai:</strong> Khi nhiệt độ của nước $T_2$ chênh lệch càng nhiều so với nhiệt độ phòng $T_1$, sự truyền nhiệt ra môi trường ngoài càng diễn ra nhanh hơn, dẫn đến hao phí lớn hơn.</li>
+                        <li><strong>d) Sai:</strong> Giả thuyết của học sinh ban đầu là "nhiệt dung riêng của nước không phụ thuộc vào khối lượng nước", và kết quả thực nghiệm chứng minh nhiệt dung riêng không phụ thuộc vào khối lượng. Như vậy kết quả thực nghiệm đã đúng với giả thuyết này.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part2" data-qnum="3">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 3.</span> Cuối thế kỷ XIX, quan điểm phổ biến cho rằng nguyên tử là một khối cầu trung hòa về điện. Tuy nhiên, cấu trúc bên trong của nguyên tử vẫn là một bí ẩn. Năm 1904, Thomson đã đề xuất mô hình nguyên tử gồm các electron nằm rải rác trong một khối cầu tích điện dương phân bố đều. Để kiểm tra tính đúng đắn của mô hình này, Rutherford cùng cộng sự đã thực hiện thí nghiệm bắn phá một lá vàng mỏng bằng chùm hạt alpha ($\alpha$).</p>
+                
+                <div class="space-y-4 text-sm">
+                    <!-- Ý a -->
+                    <div class="border-b border-gray-50 pb-3 block-sub-q" data-sub="a" data-ans="Đúng">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>a)</strong> Kết quả thí nghiệm cho thấy phần lớn hạt alpha đi thẳng qua lá vàng, một số ít bị lệch hướng (tán xạ) với các góc khác nhau.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ý b -->
+                    <div class="border-b border-gray-50 pb-3 block-sub-q" data-sub="b" data-ans="Đúng">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>b)</strong> Kết quả thí nghiệm này cho thấy nguyên tử không có cấu tạo như mô hình nguyên tử của Thomson.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ý c -->
+                    <div class="border-b border-gray-50 pb-3 block-sub-q" data-sub="c" data-ans="Sai">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>c)</strong> Các hạt alpha bị tán xạ với các góc khác nhau là do chúng tương tác điện với electron.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ý d -->
+                    <div class="block-sub-q" data-sub="d" data-ans="Sai">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>d)</strong> Kết quả thí nghiệm này, chứng minh các electron chuyển động theo quỹ đạo dừng quanh hạt nhân.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong>
+                    <ul class="list-disc ml-5 space-y-1">
+                        <li><strong>a) Đúng:</strong> Đây là hiện tượng quan sát được trực tiếp từ thí nghiệm tán xạ hạt alpha qua lá vàng mỏng.</li>
+                        <li><strong>b) Đúng:</strong> Nếu theo mô hình Thomson (khối cầu tích điện dương phân bố đều rất loãng), hạt alpha nặng sẽ đi thẳng qua dễ dàng mà hầu như không bị bật ngược lại. Thực tế một số hạt bị bật ngược lại chứng tỏ nguyên tử có một phần lõi rất nhỏ, đặc, tích điện dương (hạt nhân).</li>
+                        <li><strong>c) Sai:</strong> Hạt alpha bị tán xạ chủ yếu là do tương tác đẩy tĩnh điện (lực Coulomb) rất mạnh khi đi gần hạt nhân vàng tích điện dương rất lớn ($Z=79$), các electron có khối lượng quá nhỏ nên không đủ làm lệch hướng hạt alpha.</li>
+                        <li><strong>d) Sai:</strong> Thí nghiệm này của Rutherford chỉ chứng minh sự tồn tại của hạt nhân nguyên tử ở tâm (mô hình hành tinh nguyên tử), chứ chưa chứng minh các quỹ đạo dừng (đó là bổ sung sau này của Bohr).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part2" data-qnum="4">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 4.</span> Một xilanh cách nhiệt nằm ngang được chia thành hai ngăn kín bởi một pít-tông cách nhiệt có thể dịch chuyển không ma sát. Trong mỗi ngăn có một lượng khí lí tưởng xác định. Ban đầu hệ ở trạng thái cân bằng. Giả sử làm dịch chuyển pít-tông để nén khí ở ngăn 1.</p>
+                
+                <div class="space-y-4 text-sm">
+                    <!-- Ý a -->
+                    <div class="border-b border-gray-50 pb-3 block-sub-q" data-sub="a" data-ans="Đúng">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>a)</strong> Nhiệt độ của khối khí ở ngăn 2 giảm.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ý b -->
+                    <div class="border-b border-gray-50 pb-3 block-sub-q" data-sub="b" data-ans="Sai">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>b)</strong> Khối khí ở ngăn 1 và khối khí ở ngăn 2 đều nhận công từ pít-tông.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ý c -->
+                    <div class="border-b border-gray-50 pb-3 block-sub-q" data-sub="c" data-ans="Đúng">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>c)</strong> Khối khí ở ngăn 1 và khối khí ở ngăn 2 đều không nhận nhiệt lượng từ môi trường bên ngoài.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ý d -->
+                    <div class="block-sub-q" data-sub="d" data-ans="Sai">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span class="flex-1"><strong>d)</strong> Nội năng của khối khí ở ngăn 1 không đổi do ngăn này được cách nhiệt.</span>
+                            <div class="flex gap-2 shrink-0">
+                                <button onclick="selectTrueFalse(this, 'Đúng')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Đúng</button>
+                                <button onclick="selectTrueFalse(this, 'Sai')" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải thích chi tiết:</strong>
+                    <ul class="list-disc ml-5 space-y-1">
+                        <li><strong>a) Đúng:</strong> nén khí ngăn 1, thể tích ngăn 1 giảm $\Rightarrow$ thể tích ngăn 2 phải tăng (dãn nở). Khi khí ở ngăn 2 dãn nở đoạn nhiệt (vừa cách nhiệt vừa thay đổi thể tích) thì khí ở ngăn 2 sinh công ($A_2 < 0$, $Q_2 = 0$) nên nội năng giảm, nhiệt độ của khối khí ngăn 2 giảm là đúng vì nó dãn nở đoạn nhiệt).</li>
+                        <li><strong>b) Sai:</strong> Ngăn 1 nhận công ($A > 0$), còn ngăn 2 dãn nở nên nó sinh công ($A < 0$).</li>
+                        <li><strong>c) Đúng:</strong> Xilanh cách nhiệt và pít-tông cách nhiệt nên không có sự trao đổi nhiệt lượng với bên ngoài ($Q = 0$).</li>
+                        <li><strong>d) Sai:</strong> Khí ngăn 1 bị nén nhận công từ lực ngoài, theo nguyên lý 1: $\Delta U_1 = A_1 > 0$ nên nội năng ngăn 1 tăng.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PHẦN III ================= -->
+        <div class="space-y-6 mt-12">
+            <div class="bg-blue-900 text-white px-5 py-3 rounded-xl shadow-sm">
+                <h2 class="font-bold text-base">PHẦN III: Câu hỏi trắc nghiệm yêu cầu trả lời ngắn</h2>
+                <p class="text-xs text-blue-200 mt-1">Thí sinh trả lời từ câu 1 đến câu 6. Điền đáp án số vào ô trống (Không làm tròn kết quả phép tính trung gian, làm tròn kết quả cuối cùng theo yêu cầu của từng câu).</p>
+            </div>
+
+            <!-- Bài toán 1 & 2 -->
+            <div class="bg-gray-100 p-4 rounded-xl border border-gray-200 text-sm">
+                <h4 class="font-bold text-gray-700 uppercase tracking-wider text-xs mb-2">Dữ kiện cho Câu 1 và Câu 2</h4>
+                <div class="flex flex-col md:flex-row gap-6 items-center">
+                    <div class="flex-1 space-y-2">
+                        <p>Một thanh kim loại có chiều dài $l = 25,0\ \text{cm}$ chuyển động đều với tốc độ $v = 55,0\ \text{cm/s}$ dọc theo hai thanh ray kim loại song song, được nối với nhau bằng một dây dẫn ở một đầu.</p>
+                        <p>Hệ thống ở trong một từ trường đều có cảm ứng từ vuông góc, hướng ra khỏi mặt phẳng hình vẽ và có độ lớn $B = 0,350\ \text{T}$.</p>
+                        <p>Khi đó, suất điện động cảm ứng xuất hiện trong thanh có độ lớn là $e_c = B \cdot l \cdot v$. Thanh kim loại có điện trở là $18,0\ \Omega$, các thanh ray và dây nối có điện trở không đáng kể.</p>
+                    </div>
+                    <div class="w-full max-w-xs shrink-0 bg-white p-3 rounded-xl border border-gray-100 flex justify-center">
+                        <!-- SVG cho Bài 1-2 -->
+                        <svg viewBox="0 0 240 160" class="w-full h-auto">
+                            <!-- Hai thanh ray -->
+                            <line x1="20" y1="30" x2="220" y2="30" stroke="#000" stroke-width="6" />
+                            <line x1="20" y1="130" x2="220" y2="130" stroke="#000" stroke-width="6" />
+                            <!-- Dây nối một đầu (bên phải) -->
+                            <line x1="220" y1="30" x2="220" y2="130" stroke="#000" stroke-width="4" />
+                            
+                            <!-- Thanh trượt di chuyển -->
+                            <line x1="120" y1="15" x2="120" y2="145" stroke="#4b5563" stroke-width="5" />
+                            <circle cx="120" cy="30" r="5" fill="#ef4444" />
+                            <circle cx="120" cy="130" r="5" fill="#ef4444" />
+                            
+                            <!-- Vectơ vận tốc v -->
+                            <line x1="120" y1="80" x2="70" y2="80" stroke="#2563eb" stroke-width="3" />
+                            <polygon points="70,75 60,80 70,85" fill="#2563eb" />
+                            <text x="85" y="70" font-family="sans-serif" font-size="14" fill="#2563eb" font-weight="bold">v</text>
+                            
+                            <!-- Kí hiệu từ trường B (hướng ra) -->
+                            <circle cx="170" cy="80" r="10" fill="none" stroke="#000" stroke-width="1.5" />
+                            <circle cx="170" cy="80" r="2.5" fill="#000" />
+                            <text x="190" y="85" font-family="sans-serif" font-size="14" fill="#000" font-weight="bold">B</text>
+                            
+                            <!-- Kí hiệu l -->
+                            <line x1="35" y1="35" x2="35" y2="125" stroke="#059669" stroke-width="1.5" stroke-dasharray="4" />
+                            <polygon points="35,35 31,43 39,43" fill="#059669" />
+                            <polygon points="35,125 31,117 39,117" fill="#059669" />
+                            <text x="45" y="85" font-family="sans-serif" font-size="16" fill="#059669" font-weight="bold">l</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Câu 1 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part3" data-qnum="1" data-correct="2.67">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 1.</span> Cường độ dòng điện trong thanh kim loại là bao nhiêu miliampe ($\text{mA}$)? <span class="text-xs text-red-500">(Làm tròn kết quả đến chữ số hàng phần trăm)</span></p>
+                <div class="flex items-center gap-3">
+                    <input type="text" name="p3_q1" class="border border-gray-300 rounded-lg px-4 py-2 text-sm w-48 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Nhập đáp số...">
+                    <span class="text-sm font-semibold text-gray-500">mA</span>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải chi tiết:</strong>
+                    <ul class="list-decimal ml-5 space-y-1">
+                        <li>Đổi đơn vị: $l = 25,0\ \text{cm} = 0,25\ \text{m}$, $v = 55,0\ \text{cm/s} = 0,55\ \text{m/s}$.</li>
+                        <li>Độ lớn suất điện động cảm ứng: 
+                            $$e_c = B \cdot l \cdot v = 0,350 \cdot 0,25 \cdot 0,55 = 0,048125\ \text{V}$$
+                        </li>
+                        <li>Cường độ dòng điện chạy qua thanh: 
+                            $$I = \frac{e_c}{R} = \frac{0,048125}{18,0} \approx 0,0026736\ \text{A} = 2,6736\ \text{mA}$$
+                        </li>
+                        <li>Làm tròn đến hàng phần trăm: <strong>2.67</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part3" data-qnum="2" data-correct="0.13">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 2.</span> Công suất tỏa nhiệt ở thanh kim loại là bao nhiêu milioát ($\text{mW}$)? <span class="text-xs text-red-500">(Làm tròn kết quả đến chữ số hàng phần trăm)</span></p>
+                <div class="flex items-center gap-3">
+                    <input type="text" name="p3_q2" class="border border-gray-300 rounded-lg px-4 py-2 text-sm w-48 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Nhập đáp số...">
+                    <span class="text-sm font-semibold text-gray-500">mW</span>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải chi tiết:</strong>
+                    <ul class="list-decimal ml-5 space-y-1">
+                        <li>Công suất tỏa nhiệt trên điện trở của thanh:
+                            $$P = I^2 \cdot R = (0,0026736)^2 \cdot 18 \approx 0,0001287\ \text{W} \approx 0,1287\ \text{mW}$$
+                            Hoặc tính bằng: $P = \frac{e_c^2}{R} = \frac{0,048125^2}{18} \approx 0,1287\ \text{mW}$.
+                        </li>
+                        <li>Làm tròn đến hàng phần trăm: <strong>0.13</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bài toán 3 & 4 -->
+            <div class="bg-gray-100 p-4 rounded-xl border border-gray-200 text-sm">
+                <h4 class="font-bold text-gray-700 uppercase tracking-wider text-xs mb-2">Dữ kiện cho Câu 3 và Câu 4</h4>
+                <p class="mb-2">Một pin hạt nhân sử dụng đồng vị phóng xạ plutonium với hằng số phóng xạ $\lambda = 2,50 \cdot 10^{-10}\ \text{s}^{-1}$ để cung cấp năng lượng cho xe tự hành trên Hỏa Tinh.</p>
+                <p class="mb-2">Tại thời điểm đưa vào sử dụng để phát điện (thời điểm ban đầu $t = 0$), pin hạt nhân này chứa $8,60 \cdot 10^{24}$ hạt nhân. Biết mỗi phân rã hạt nhân tỏa ra năng lượng là $8,97 \cdot 10^{-13}\ \text{J}$ và toàn bộ năng lượng này biến thành nhiệt.</p>
+                <p>Trong đó, chỉ có $6,20\%$ năng lượng nhiệt chuyển hóa thành điện năng. Lấy $1\ \text{năm} = 365\ \text{ngày}$, $1\ \text{ngày} = 86400\ \text{s}$.</p>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part3" data-qnum="3" data-correct="0.12">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 3.</span> Năng lượng điện do pin cung cấp trong giây đầu tiên tính từ thời điểm ban đầu là bao nhiêu kilôjun ($\text{kJ}$)? <span class="text-xs text-red-500">(Làm tròn kết quả đến chữ số hàng phần trăm)</span></p>
+                <div class="flex items-center gap-3">
+                    <input type="text" name="p3_q3" class="border border-gray-300 rounded-lg px-4 py-2 text-sm w-48 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Nhập đáp số...">
+                    <span class="text-sm font-semibold text-gray-500">kJ</span>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải chi tiết:</strong>
+                    <ul class="list-decimal ml-5 space-y-1">
+                        <li>Số hạt nhân bị phân rã trong $1\ \text{giây}$ đầu tiên ($t = 1\ \text{s} \ll T_{1/2}$):
+                            $$\Delta N = N_0 \cdot (1 - e^{-\lambda t}) \approx N_0 \cdot \lambda \cdot t = (8,60 \cdot 10^{24}) \cdot (2,50 \cdot 10^{-10}\ \text{s}^{-1}) \cdot 1\ \text{s} = 2,15 \cdot 10^{15}\ \text{hạt}$$
+                        </li>
+                        <li>Năng lượng nhiệt tỏa ra trong giây đầu tiên:
+                            $$Q_{nhiệt} = \Delta N \cdot E_{phân\_rã} = (2,15 \cdot 10^{15}) \cdot (8,97 \cdot 10^{-13}\ \text{J}) = 1928,55\ \text{J}$$
+                        </li>
+                        <li>Năng lượng điện năng thu được thực tế (hiệu suất $6,20\%$):
+                            $$E_{điện} = Q_{nhiệt} \cdot 6,20\% = 1928,55 \cdot 0,062 = 119,5701\ \text{J} \approx 0,11957\ \text{kJ}$$
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part3" data-qnum="4" data-correct="7.06">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 4.</span> Ở thời điểm $t = 25,0\ \text{năm}$ kể từ thời điểm ban đầu, số lượng hạt nhân chưa phân rã trong pin là $x \cdot 10^{24}$ hạt nhân. Tìm $x$. <span class="text-xs text-red-500">(Làm tròn kết quả đến chữ số hàng phần trăm)</span></p>
+                <div class="flex items-center gap-3">
+                    <input type="text" name="p3_q4" class="border border-gray-300 rounded-lg px-4 py-2 text-sm w-48 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Nhập đáp số...">
+                    <span class="text-sm font-semibold text-gray-500">$\times 10^{24}$ hạt nhân</span>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải chi tiết:</strong>
+                    <ul class="list-decimal ml-5 space-y-1">
+                        <li>Đổi thời gian $t = 25,0\ \text{năm} = 25 \cdot 365 \cdot 86400\ \text{s} = 788400000\ \text{s}$.</li>
+                        <li>Số hạt nhân chưa phân rã còn lại:
+                            $$N = N_0 \cdot e^{-\lambda t} = (8,60 \cdot 10^{24}) \cdot e^{-(2,50 \cdot 10^{-10}) \cdot 788400000}$$
+                            $$N = 8,60 \cdot 10^{24} \cdot e^{-0,1971} \approx 8,60 \cdot 10^{24} \cdot 0,821109 \approx 7,0615 \cdot 10^{24}\ \text{hạt}$$
+                        </li>
+                        <li>Đáp số chuẩn xác: <strong>7.06</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bài toán 5 & 6 -->
+            <div class="bg-gray-100 p-4 rounded-xl border border-gray-200 text-sm">
+                <h4 class="font-bold text-gray-700 uppercase tracking-wider text-xs mb-2">Dữ kiện cho Câu 5 và Câu 6</h4>
+                <p class="mb-2">Trước khi khởi hành, người lái xe điều chỉnh áp suất khí trong lốp xe ô tô về giá trị khuyến nghị của nhà sản xuất. Khi đó, nhiệt độ của khí trong lốp xe là $14,5\ ^\circ\text{C}$.</p>
+                <p class="mb-2">Sau khi lái xe được một quãng đường, cảm biến cho biết nhiệt độ của khí trong lốp là $48,5\ ^\circ\text{C}$.</p>
+                <p>Coi khí trong lốp xe là khí lí tưởng và thể tích lốp xe không thay đổi. Lấy $T\ (\text{K}) = t\ (^\circ\text{C}) + 273$.</p>
+            </div>
+
+            <!-- Câu 5 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part3" data-qnum="5" data-correct="11.8">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 5.</span> Áp suất khí trong lốp xe đã tăng thêm bao nhiêu phần trăm so với giá trị khuyến nghị? <span class="text-xs text-red-500">(Làm tròn kết quả đến chữ số hàng phần mười)</span></p>
+                <div class="flex items-center gap-3">
+                    <input type="text" name="p3_q5" class="border border-gray-300 rounded-lg px-4 py-2 text-sm w-48 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Nhập đáp số...">
+                    <span class="text-sm font-semibold text-gray-500">%</span>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải chi tiết:</strong>
+                    <ul class="list-decimal ml-5 space-y-1">
+                        <li>Đổi nhiệt độ sang Kelvin:
+                            $$T_1 = 14,5 + 273 = 287,5\ \text{K}$$
+                            $$T_2 = 48,5 + 273 = 321,5\ \text{K}$$
+                        </li>
+                        <li>Do thể tích lốp xe không đổi (quá trình đẳng tích):
+                            $$\frac{p_1}{T_1} = \frac{p_2}{T_2} \Rightarrow \frac{p_2}{p_1} = \frac{T_2}{T_1} = \frac{321,5}{287,5} \approx 1,11826$$
+                        </li>
+                        <li>Phần trăm áp suất tăng thêm:
+                            $$\Delta p\% = \left(\frac{p_2}{p_1} - 1\right) \cdot 100\% = (1,11826 - 1) \cdot 100\% \approx 11,8\%$$
+                        </li>
+                        <li>Đáp số: <strong>11.8</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Câu 6 -->
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 question-block" data-qtype="part3" data-qnum="6" data-correct="10.6">
+                <p class="font-bold mb-3"><span class="text-blue-600">Câu 6.</span> Người lái xe giảm áp suất khí trong lốp về giá trị khuyến nghị bằng cách xả bớt một lượng khí qua van. Nhiệt độ của khí trong lốp xe vẫn giữ ở mức $48,5\ ^\circ\text{C}$. Khối lượng khí đã được xả ra ngoài bằng bao nhiêu phần trăm khối lượng khí trong lốp xe trước khi xả? <span class="text-xs text-red-500">(Làm tròn kết quả đến chữ số hàng phần mười)</span></p>
+                <div class="flex items-center gap-3">
+                    <input type="text" name="p3_q6" class="border border-gray-300 rounded-lg px-4 py-2 text-sm w-48 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Nhập đáp số...">
+                    <span class="text-sm font-semibold text-gray-500">%</span>
+                </div>
+                <div class="mt-3 hidden explanation-block text-sm bg-blue-50 text-blue-950 p-3.5 rounded-lg border border-blue-100">
+                    <strong>Giải chi tiết:</strong>
+                    <ul class="list-decimal ml-5 space-y-1">
+                        <li>Trạng thái trước khi xả khí (ở nhiệt độ $T_2 = 321,5\ \text{K}$): Áp suất là $p_2$, khối lượng khí là $m_1$, thể tích là $V$.
+                            Phương trình Mendeleev-Clapeyron: 
+                            $$p_2 \cdot V = \frac{m_1}{\mu} \cdot R \cdot T_2 \quad (1)$$
+                        </li>
+                        <li>Trạng thái sau khi xả khí (ở cùng nhiệt độ $T_2 = 321,5\ \text{K}$): Áp suất giảm về giá trị ban đầu $p_1$, khối lượng khí còn lại là $m_2$, thể tích lốp $V$ không đổi.
+                            $$p_1 \cdot V = \frac{m_2}{\mu} \cdot R \cdot T_2 \quad (2)$$
+                        </li>
+                        <li>Lập tỉ số từ (1) và (2) ta được:
+                            $$\frac{m_2}{m_1} = \frac{p_1}{p_2}$$
+                        </li>
+                        <li>Khối lượng khí đã xả ra ngoài: $\Delta m = m_1 - m_2$. Tỉ lệ phần trăm lượng khí đã xả so với lượng khí ban đầu:
+                            $$\frac{\Delta m}{m_1} = \frac{m_1 - m_2}{m_1} = 1 - \frac{m_2}{m_1} = 1 - \frac{p_1}{p_2}$$
+                        </li>
+                        <li>Thay tỉ số $\frac{p_1}{p_2} = \frac{287,5}{321,5} \approx 0,89425$:
+                            $$\frac{\Delta m}{m_1} = 1 - 0,89425 = 0,10575 \approx 10,6\%$$
+                        </li>
+                        <li>Đáp số: <strong>10.6</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer section -->
+        <div class="text-center text-xs text-gray-400 mt-12 pb-8 border-t border-gray-200 pt-4">
+            <p>© 2026 Kỳ thi Tốt nghiệp THPT - Môn Vật Lí - Bản quyền nội dung thuộc Bộ GD&ĐT.</p>
+            <p class="mt-1">Hệ thống tương tác được phát triển để hỗ trợ học sinh tự học và ôn thi hiệu quả.</p>
+        </div>
+    </div>
+
+    <!-- JS Logic for interaction -->
+    <script>
+        // Track state for True/False questions (Part II)
+        // Store user selections as dictionary: { 'q1_a': 'Đúng', 'q1_b': 'Sai', ... }
+        const userTrueFalseAnswers = {};
+
+        function selectTrueFalse(button, selection) {
+            // Find parent sub-question element
+            const subQBlock = button.closest('.block-sub-q');
+            const questionBlock = button.closest('.question-block');
+            const qNum = questionBlock.getAttribute('data-qnum');
+            const subName = subQBlock.getAttribute('data-sub');
+            const key = `q${qNum}_${subName}`;
+
+            // Reset other button in the same sub-question
+            const buttons = subQBlock.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                btn.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
+            });
+
+            // Highlight selected button
+            button.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
+            button.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+
+            // Save user selection
+            userTrueFalseAnswers[key] = selection;
+        }
+
+        function submitExam() {
+            let part1CorrectCount = 0;
+            let part2CorrectCount = 0; // Total correct sub-questions
+            let part3CorrectCount = 0;
+
+            // Score metrics
+            const totalPart1Questions = 18;
+            const totalPart2SubQuestions = 16; // 4 questions * 4 sub-questions = 16
+            const totalPart3Questions = 6;
+
+            // Clear previous highlight styles
+            document.querySelectorAll('.correct-bg, .incorrect-bg').forEach(el => {
+                el.classList.remove('correct-bg', 'incorrect-bg');
+            });
+
+            // --- EVALUATE PART I ---
+            for (let i = 1; i <= totalPart1Questions; i++) {
+                const qBlock = document.querySelector(`.question-block[data-qtype="part1"][data-qnum="${i}"]`);
+                const correctAnswer = qBlock.getAttribute('data-correct');
+                const selectedRadio = qBlock.querySelector(`input[name="p1_q${i}"]:checked`);
+                
+                const labels = qBlock.querySelectorAll('label');
+                labels.forEach(lbl => {
+                    const rInput = lbl.querySelector('input');
+                    if (rInput.value === correctAnswer) {
+                        lbl.classList.add('correct-bg'); // Highlight correct answer
+                    }
+                    if (selectedRadio && selectedRadio.value === rInput.value && selectedRadio.value !== correctAnswer) {
+                        lbl.classList.add('incorrect-bg'); // Highlight user's incorrect choice
+                    }
+                });
+
+                if (selectedRadio && selectedRadio.value === correctAnswer) {
+                    part1CorrectCount++;
+                }
+            }
+
+            // --- EVALUATE PART II ---
+            // Group of 4 questions, each has 4 sub-questions (a, b, c, d)
+            for (let qNum = 1; qNum <= 4; qNum++) {
+                const qBlock = document.querySelector(`.question-block[data-qtype="part2"][data-qnum="${qNum}"]`);
+                const subBlocks = qBlock.querySelectorAll('.block-sub-q');
+                
+                subBlocks.forEach(subBlock => {
+                    const subName = subBlock.getAttribute('data-sub');
+                    const correctAnswer = subBlock.getAttribute('data-ans'); // "Đúng" or "Sai"
+                    const key = `q${qNum}_${subName}`;
+                    const userSelection = userTrueFalseAnswers[key];
+
+                    const buttons = subBlock.querySelectorAll('button');
+                    buttons.forEach(btn => {
+                        const btnText = btn.textContent.trim();
+                        // Mark correct options green
+                        if (btnText === correctAnswer) {
+                            btn.classList.add('border-green-600', 'bg-green-50', 'text-green-800');
+                        }
+                        // Mark user incorrect choice red
+                        if (userSelection && userSelection === btnText && userSelection !== correctAnswer) {
+                            btn.classList.add('border-red-600', 'bg-red-50', 'text-red-800');
+                        }
+                    });
+
+                    if (userSelection && userSelection === correctAnswer) {
+                        part2CorrectCount++;
+                    }
+                });
+            }
+
+            // --- EVALUATE PART III ---
+            for (let i = 1; i <= totalPart3Questions; i++) {
+                const qBlock = document.querySelector(`.question-block[data-qtype="part3"][data-qnum="${i}"]`);
+                const correctAnswer = parseFloat(qBlock.getAttribute('data-correct'));
+                const userInputEl = qBlock.querySelector(`input[name="p3_q${i}"]`);
+                const userValRaw = userInputEl.value.trim().replace(',', '.');
+                const userVal = parseFloat(userValRaw);
+
+                // Margin of error for rounding differences
+                const isCorrect = !isNaN(userVal) && (Math.abs(userVal - correctAnswer) <= 0.02 || (correctAnswer === 7.07 && Math.abs(userVal - 7.06) <= 0.01));
+
+                if (isCorrect) {
+                    part3CorrectCount++;
+                    userInputEl.classList.remove('border-gray-300');
+                    userInputEl.classList.add('border-green-500', 'bg-green-50', 'text-green-900', 'font-bold');
+                } else {
+                    userInputEl.classList.remove('border-gray-300');
+                    userInputEl.classList.add('border-red-500', 'bg-red-50', 'text-red-900', 'font-bold');
+                    // Display correct hint next to input
+                    let hint = qBlock.querySelector('.answer-hint');
+                    if (!hint) {
+                        hint = document.createElement('span');
+                        hint.className = 'answer-hint text-xs text-green-600 font-bold ml-2';
+                        userInputEl.parentNode.appendChild(hint);
+                    }
+                    hint.textContent = `(Đáp án đúng: ${correctAnswer === 7.07 ? '7.06 hoặc 7.07' : correctAnswer})`;
+                }
+            }
+
+            // --- SCORING FORMULA ---
+            // Bộ GD&ĐT scoring standard for Physics:
+            // Part I: 18 questions * 0.25 points = 4.5 points max
+            const scorePart1 = part1CorrectCount * 0.25;
+
+            // Part II: 4 questions, each question max 1.0 point.
+            // If correct 1/4 sub-questions: 0.1 points
+            // If correct 2/4 sub-questions: 0.25 points
+            // If correct 3/4 sub-questions: 0.5 points
+            // If correct 4/4 sub-questions: 1.0 point
+            let scorePart2 = 0;
+            for (let qNum = 1; qNum <= 4; qNum++) {
+                let correctInThisQuestion = 0;
+                for (const sub of ['a', 'b', 'c', 'd']) {
+                    const key = `q${qNum}_${sub}`;
+                    const block = document.querySelector(`.question-block[data-qtype="part2"][data-qnum="${qNum}"] .block-sub-q[data-sub="${sub}"]`);
+                    const correctAnswer = block.getAttribute('data-ans');
+                    if (userTrueFalseAnswers[key] === correctAnswer) {
+                        correctInThisQuestion++;
+                    }
+                }
+                if (correctInThisQuestion === 1) scorePart2 += 0.1;
+                else if (correctInThisQuestion === 2) scorePart2 += 0.25;
+                else if (correctInThisQuestion === 3) scorePart2 += 0.5;
+                else if (correctInThisQuestion === 4) scorePart2 += 1.0;
+            }
+
+            // Part III: 6 questions * 0.25 points = 1.5 points max (Some exams use 0.25, total 1.5 pt)
+            // Adjust to sum total of 10 points. 
+            // Standard: Part I = 4.5 pts. Part II = 4.0 pts. Part III = 1.5 pts. Total = 10.0 pts.
+            const scorePart3 = part3CorrectCount * 0.25;
+
+            const finalScore = scorePart1 + scorePart2 + scorePart3;
+
+            // Render result report
+            document.getElementById('scoreVal').textContent = `${finalScore.toFixed(2)} / 10`;
+            document.getElementById('part1Correct').textContent = `${part1CorrectCount} / ${totalPart1Questions}`;
+            document.getElementById('part2Correct').textContent = `${part2CorrectCount} / ${totalPart2SubQuestions}`;
+            document.getElementById('part3Correct').textContent = `${part3CorrectCount} / ${totalPart3Questions}`;
+
+            const reportContainer = document.getElementById('scoreReport');
+            reportContainer.classList.remove('hidden');
+            reportContainer.scrollIntoView({ behavior: 'smooth' });
+
+            // Reveal all explanation blocks
+            document.querySelectorAll('.explanation-block').forEach(block => {
+                block.classList.remove('hidden');
+            });
+
+            // Re-render MathJax
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function resetExam() {
+            // Uncheck radios
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+
+            // Reset True/False button states
+            document.querySelectorAll('.block-sub-q button').forEach(btn => {
+                btn.className = "px-3 py-1.5 border rounded-lg hover:bg-gray-50 font-medium text-xs transition bg-white text-gray-700 border-gray-200";
+            });
+            // Clear selections
+            for (const key in userTrueFalseAnswers) {
+                delete userTrueFalseAnswers[key];
+            }
+
+            // Clear input fields
+            document.querySelectorAll('input[type="text"]').forEach(input => {
+                if (input.name.startsWith('p3_')) {
+                    input.value = "";
+                    input.className = "border border-gray-300 rounded-lg px-4 py-2 text-sm w-48 focus:ring-2 focus:ring-blue-500 focus:outline-none";
+                }
+            });
+
+            // Remove answer hints
+            document.querySelectorAll('.answer-hint').forEach(el => el.remove());
+
+            // Hide explanation & score blocks
+            document.querySelectorAll('.explanation-block').forEach(block => {
+                block.classList.add('hidden');
+            });
+            document.getElementById('scoreReport').classList.add('hidden');
+
+            // Reset card highlighting
+            document.querySelectorAll('.correct-bg, .incorrect-bg').forEach(el => {
+                el.classList.remove('correct-bg', 'incorrect-bg');
+            });
+        }
+    </script>
+</body>
+</html>
